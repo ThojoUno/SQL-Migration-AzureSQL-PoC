@@ -1,5 +1,5 @@
 @description('Use Alphanumerics and can\'t use spaces, control characters, or these characters: ~ ! @ # $ % ^ & * ( ) = + _ [ ] { } \'\\\'\' | ; : . \' , < > / ?')
-param suffixName string
+param suffixName string = 'sqlpoc'
 param location string = resourceGroup().location
 param adminUsername string = 'sqladmin'
 
@@ -32,9 +32,9 @@ var InterfaceName = '${sqlVMName}-nic'
 var vnetAddressPrefix = '10.0.0.0/16'
 var subnet1Prefix = '10.0.0.0/24'
 var subnet1Name = 'default'
-var IpAddressName = '${sqlVMName}-publicip-${uniqueString(sqlVMName)}'
-var publicIpAddressType = 'Dynamic'
-var publicIpAddressSku = 'Basic'
+// var IpAddressName = '${sqlVMName}-publicip-${uniqueString(sqlVMName)}'
+// var publicIpAddressType = 'Dynamic'
+// var publicIpAddressSku = 'Basic'
 var NSGName = '${sqlVMName}-nsg'
 var networkSecurityGroupRules = [
   {
@@ -78,7 +78,7 @@ var pvtEndpointDnsGroup_name = '${privateEndpoint_name}/mydnsgroupname'
 var jbVMName = 'jb-migration'
 var jbInterfaceName = 'jumpbox-migration-nic'
 var jbNSGName = 'jumpbox-migration-nsg'
-var jbIpAddressName = 'jumpbox-migration-ip'
+// var jbIpAddressName = 'jumpbox-migration-ip'
 var jbVNetName = 'jumpbox-migration-vnet'
 
 resource dmsName 'Microsoft.DataMigration/sqlMigrationServices@2022-03-30-preview' = {
@@ -120,16 +120,16 @@ resource databaseName 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
   dependsOn:[sqlServerName]
 }
 
-resource publicIpAddressName 'Microsoft.Network/publicIPAddresses@2022-05-01' = {
-  name: IpAddressName
-  location: location
-  sku: {
-    name: publicIpAddressSku
-  }
-  properties: {
-    publicIPAllocationMethod: publicIpAddressType
-  }
-}
+// resource publicIpAddressName 'Microsoft.Network/publicIPAddresses@2022-05-01' = {
+//   name: IpAddressName
+//   location: location
+//   sku: {
+//     name: publicIpAddressSku
+//   }
+//   properties: {
+//     publicIPAllocationMethod: publicIpAddressType
+//   }
+// }
 
 resource networkSecurityGroupName 'Microsoft.Network/networkSecurityGroups@2022-05-01' = {
   name: NSGName
@@ -183,16 +183,16 @@ resource networkInterfaceName 'Microsoft.Network/networkInterfaces@2022-05-01' =
           subnet: {
             id: '${virtualNetworksName.id}/subnets/${subnet1Name}'
           }
-          publicIPAddress: {
-            id: publicIpAddressName.id
-          }
         }
       }
     ]
     enableAcceleratedNetworking: true
   }
-
 }
+          // publicIPAddress: {
+          //   id: publicIpAddressName.id
+          // }
+
 
 resource privateEndpointName 'Microsoft.Network/privateEndpoints@2022-05-01' = {
   name: privateEndpoint_name
@@ -364,16 +364,16 @@ resource SqlVirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2022-
   }
 }
 
-resource jbPublicIpAddressName 'Microsoft.Network/publicIpAddresses@2019-06-01' = {
-  name: jbIpAddressName
-  location: location
-  properties: {
-    publicIPAllocationMethod: 'Dynamic'
-  }
-  sku: {
-    name: 'Basic'
-  }
-}
+// resource jbPublicIpAddressName 'Microsoft.Network/publicIpAddresses@2019-06-01' = {
+//   name: jbIpAddressName
+//   location: location
+//   properties: {
+//     publicIPAllocationMethod: 'Dynamic'
+//   }
+//   sku: {
+//     name: 'Basic'
+//   }
+// }
 
 resource jbNetworkSecurityGroupName 'Microsoft.Network/networkSecurityGroups@2019-06-01' = {
   name: jbNSGName
@@ -409,14 +409,15 @@ resource jbNetworkInterfaceName 'Microsoft.Network/networkInterfaces@2019-06-01'
             id: resourceId('Microsoft.Network/virtualNetworks/subnets', jbVNetName, 'default')
           }
           privateIPAllocationMethod: 'Dynamic'
-          publicIPAddress: {
-            id: jbPublicIpAddressName.id
-          }
         }
       }
     ]
   }
 }
+          // publicIPAddress: {
+          //   id: jbPublicIpAddressName.id
+          // }
+
 
 resource jbVirtualNetworkName 'Microsoft.Network/virtualNetworks@2022-05-01' = {
   name: jbVNetName
