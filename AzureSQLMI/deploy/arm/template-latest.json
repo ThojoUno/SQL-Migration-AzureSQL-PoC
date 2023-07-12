@@ -307,9 +307,9 @@
                 "typeHandlerVersion": "1.9",
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/AzureSQLMI/deploy/PostInstallation.ps1"
-                    ],
-                    "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File PostInstallation.ps1"
+                        "https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/SQLVMPostInstallation.ps1"
+                       ], 
+                    "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File SQLVMPostInstallation.ps1"
                 },
 
                 "protectedSettings": {}
@@ -725,7 +725,7 @@
                     }
                 },
                 "hardwareProfile": {
-                    "vmSize": "Standard_B2s"
+                    "vmSize": "Standard_B4ms"
                 },
                 "storageProfile": {
                     "osDisk": {
@@ -736,8 +736,8 @@
                     },
                     "imageReference": {
                         "publisher": "MicrosoftWindowsDesktop",
-                        "offer": "Windows-10",
-                        "sku": "win10-21h2-pro",
+                        "offer": "windows-11",
+                        "sku": "win11-22h2-pro",
                         "version": "latest"
                     }
                 },
@@ -765,7 +765,8 @@
                 "typeHandlerVersion": "1.9",
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/AzureSQLMI/deploy/JumpboxPostInstallation.ps1"
+                        "https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/JumpBoxPostInstallation.ps1"
+                        
                     ],
                     "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File JumpboxPostInstallation.ps1"
                 },
@@ -773,7 +774,7 @@
                 "protectedSettings": {}
             }
         }
-        // END JUMP BOM
+        // END JUMP BOX
     ],
     "outputs": {
     }
